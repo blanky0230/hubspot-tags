@@ -20,4 +20,9 @@ class EmailTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         new Email('hugenddybeblasdbbe.adsd.-asd.asdcom');
     }
+
+    public function testCanCompareAsString()
+    {
+        $this->assertEquals('foo@bar.com', new Email('foo@bar.com'));
+    }
 }

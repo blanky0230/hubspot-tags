@@ -23,4 +23,21 @@ final class Contact
         $this->identifier = $identifier;
         $this->activities = [];
     }
+
+    public function getActivities(): array
+    {
+        return $this->activities;
+    }
+
+    public function addActivity(Activity $activity): Contact
+    {
+        $this->activities[] = $activity;
+
+        return $this;
+    }
+
+    public function getIdentifier(): ContactIdentifierInterface
+    {
+        return $this->identifier;
+    }
 }

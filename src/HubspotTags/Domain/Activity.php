@@ -6,6 +6,7 @@ namespace HubspotTags\Domain;
 
 use DateTimeImmutable;
 use HubspotTags\Domain\ValueObject\AbstractTag;
+use HubspotTags\Domain\ValueObject\ActivityIdentifierInterface;
 
 final class Activity
 {
@@ -15,15 +16,29 @@ final class Activity
     private $time;
 
     /**
-     * @var AbstractTag;
+     * @var AbstractTag
      */
     private $tag;
 
-    public function __construct(DateTimeImmutable $time, AbstractTag $tag)
+    /**
+     * @var ActivityIdentifierInterface
+     */
+    private $identifier;
+
+    public function __construct(ActivityIdentifierInterface $identifier, DateTimeImmutable $time, AbstractTag $tag)
     {
+        $this->identifier = $identifier;
         $this->tag = $tag;
         $this->time = $time;
     }
 
-    //TODO Comparison method for soring by DATE or by TAG?
+    public function getTag(): AbstractTag
+    {
+        return $this->tag;
+    }
+
+    public function getIdentifier(): ActivityIdentifierInterface
+    {
+        return $this->identifier;
+    }
 }
