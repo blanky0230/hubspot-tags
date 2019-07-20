@@ -1,13 +1,13 @@
 <?php
 
+declare(strict_types=1);
 
 namespace HubspotTags\Domain\ValueObject;
-
 
 abstract class AbstractTag
 {
     /**
-     * @var string $inputText
+     * @var string
      */
     protected $inputText;
 

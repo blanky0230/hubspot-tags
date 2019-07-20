@@ -1,14 +1,14 @@
 <?php
 
+declare(strict_types=1);
 
 namespace HubspotTags\Domain\ValueObject;
-
 
 final class DemoTag extends AbstractTag
 {
     /**
      * @return bool
-     * TODO Could be sped up by only looking at the last line of the text. (Needs to be a ValidUseCaseThough!)
+     *              TODO Could be sped up by only looking at the last line of the text. (Needs to be a ValidUseCaseThough!)
      */
     protected function isValid(): bool
     {

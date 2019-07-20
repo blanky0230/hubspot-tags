@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace HubspotTags\Domain;
-
 
 use DateTimeImmutable;
 use HubspotTags\Domain\ValueObject\AbstractTag;
@@ -10,12 +10,12 @@ use HubspotTags\Domain\ValueObject\AbstractTag;
 final class Activity
 {
     /**
-     * @var DateTimeImmutable $time
+     * @var DateTimeImmutable
      */
     private $time;
 
     /**
-     * @var AbstractTag $tag;
+     * @var AbstractTag;
      */
     private $tag;
 
