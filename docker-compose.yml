@@ -1,0 +1,8 @@
+version: '3'
+# docker-compose run -u ${UID} hubspot-tags vendor/bin/phpunit tests
+services:
+  hubspot-tags:
+      build:
+        .
+      volumes:
+        - ./:/app
