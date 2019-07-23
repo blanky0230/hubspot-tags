@@ -13,7 +13,7 @@ interface ActivityRepositoryInterface
 
     public function getAllActivities(): array;
 
-    public function getActivity(ActivityIdentifierInterface $identifier): Activity;
+    public function getActivity(ActivityIdentifierInterface $identifier): ?Activity;
 
     public function addActivity(ContactIdentifierInterface $contactIdentifier, Activity $activity): self;
 }

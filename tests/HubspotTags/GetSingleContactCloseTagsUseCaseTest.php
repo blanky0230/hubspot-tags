@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace HubspotTags\Test;
-
 
 use HubspotTags\Domain\Activity;
 use HubspotTags\Domain\Contact;
@@ -17,7 +17,6 @@ use PHPUnit\Framework\TestCase;
 
 class GetSingleContactCloseTagsUseCaseTest extends TestCase
 {
-
     public function testCanCreate()
     {
         $this->assertInstanceOf(GetSingleContactCloseTagActivities::class,
@@ -45,5 +44,4 @@ class GetSingleContactCloseTagsUseCaseTest extends TestCase
         $this->assertCount(2, $c->getActivities());
         $this->assertCount(1, $useCase->execute());
     }
-
 }

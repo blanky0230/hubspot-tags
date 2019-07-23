@@ -10,7 +10,7 @@ interface ContactRepositoryInterface
 {
     public function getAllContacts(): array;
 
-    public function getSingleContact(ContactIdentifierInterface $identifier): Contact;
+    public function getSingleContact(ContactIdentifierInterface $identifier): ?Contact;
 
     public function addContact(Contact $contact): self;
 }

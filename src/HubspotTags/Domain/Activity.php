@@ -41,4 +41,9 @@ final class Activity
     {
         return $this->identifier;
     }
+
+    public function getCreationDateString(): string
+    {
+        return $this->time->format('Y-m-d');
+    }
 }

@@ -7,10 +7,10 @@ namespace HubspotTags\UseCase;
 use HubspotTags\Domain\Activity;
 use HubspotTags\Domain\Contact;
 use HubspotTags\Domain\ContactRepositoryInterface;
-use HubspotTags\Domain\ValueObject\CloseTag;
 use HubspotTags\Domain\ValueObject\ContactIdentifierInterface;
+use HubspotTags\Domain\ValueObject\DemoTag;
 
-final class GetSingleContactCloseTagActivities implements UseCaseInterface
+class GetSingleContactDemoTagActivities implements UseCaseInterface
 {
     /**
      * @var ContactRepositoryInterface
@@ -35,7 +35,7 @@ final class GetSingleContactCloseTagActivities implements UseCaseInterface
 
         return array_filter($contact->getActivities(), function ($activity) {
             /* @var Activity $activity */
-            return CloseTag::class === get_class($activity->getTag());
+            return DemoTag::class === get_class($activity->getTag());
         });
     }
 }

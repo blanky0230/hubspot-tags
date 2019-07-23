@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace HubspotTags\Test;
-
 
 use HubspotTags\Domain\Contact;
 use HubspotTags\Domain\InMemoryContactRepository;
@@ -11,7 +11,6 @@ use PHPUnit\Framework\TestCase;
 
 class InMemoryContactRepositoryTest extends TestCase
 {
-
     public function testCanInstantiate()
     {
         $this->assertInstanceOf(InMemoryContactRepository::class, new InMemoryContactRepository());
@@ -30,5 +29,4 @@ class InMemoryContactRepositoryTest extends TestCase
         $contact = new Contact($id);
         $this->assertSame($contact, (new InMemoryContactRepository())->addContact($contact)->getSingleContact($id));
     }
-
 }

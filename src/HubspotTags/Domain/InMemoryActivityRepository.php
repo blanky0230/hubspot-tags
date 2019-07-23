@@ -27,18 +27,27 @@ final class InMemoryActivityRepository implements ActivityRepositoryInterface
 
     public function getContactActivities(ContactIdentifierInterface $identifier): array
     {
-        return $this->contactRepository->getSingleContact($identifier)->getActivities();
+        $contact = $this->contactRepository->getSingleContact($identifier);
+        if (null === $contact) {
+            return [];
+        }
+
+        return $contact->getActivities();
     }
 
-    public function getActivity(ActivityIdentifierInterface $identifier): Activity
+    public function getActivity(ActivityIdentifierInterface $identifier): ?Activity
     {
+        if (!array_key_exists(strval($identifier), $this->activities)) {
+            return null;
+        }
+
         return $this->activities[strval($identifier)];
     }
 
     public function addActivity(ContactIdentifierInterface $contactIdentifier, Activity $activity): ActivityRepositoryInterface
     {
         $contact = $this->contactRepository->getSingleContact($contactIdentifier);
-        if (!array_key_exists(strval($activity->getIdentifier()), $this->activities)) {
+        if (null !== $contact && !array_key_exists(strval($activity->getIdentifier()), $this->activities)) {
             $this->activities[strval($activity->getIdentifier())] = $activity;
             $contact->addActivity($activity);
         }

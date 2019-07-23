@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace HubspotTags\Test;
-
 
 use HubspotTags\Domain\Activity;
 use HubspotTags\Domain\Contact;
@@ -16,7 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 class InMemoryActivityRepositoryTest extends TestCase
 {
-
     public function testCanInstantiate()
     {
         $this->assertInstanceOf(InMemoryActivityRepository::class, new InMemoryActivityRepository(new InMemoryContactRepository()));
@@ -45,14 +44,12 @@ class InMemoryActivityRepositoryTest extends TestCase
         $aRepo = new InMemoryActivityRepository($cRepo);
         $aRepo->addActivity($contact->getIdentifier(), $activity);
         $this->assertSame($contact->getActivities(), $aRepo->getContactActivities($contact->getIdentifier()));
-
     }
 
     public function generateSomeActivities()
     {
-        for ($i =0; $i < 10; $i++) {
+        for ($i = 0; $i < 10; ++$i) {
             yield [new Activity(new ActivityBasicId($i), new \DateTimeImmutable(), new DemoTag('DEMO'))];
         }
     }
-
 }

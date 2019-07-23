@@ -23,9 +23,13 @@ final class InMemoryContactRepository implements ContactRepositoryInterface
         return $this->contacts;
     }
 
-    public function getSingleContact(ContactIdentifierInterface $identifier): Contact
+    public function getSingleContact(ContactIdentifierInterface $identifier): ?Contact
     {
-        return $this->contacts[strval($identifier)];
+        if (array_key_exists(strval($identifier), $this->contacts)) {
+            return $this->contacts[strval($identifier)];
+        }
+
+        return null;
     }
 
     public function addContact(Contact $contact): ContactRepositoryInterface

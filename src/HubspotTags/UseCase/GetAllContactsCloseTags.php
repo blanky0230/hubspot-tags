@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace HubspotTags\UseCase;
-
 
 use HubspotTags\Domain\Contact;
 use HubspotTags\Domain\ContactRepositoryInterface;
@@ -10,7 +10,7 @@ use HubspotTags\Domain\ContactRepositoryInterface;
 final class GetAllContactsCloseTags implements UseCaseInterface
 {
     /**
-     * @var ContactRepositoryInterface $contactRepository
+     * @var ContactRepositoryInterface
      */
     private $contactRepository;
 
@@ -24,9 +24,10 @@ final class GetAllContactsCloseTags implements UseCaseInterface
         $aggregate = [];
         /** @var Contact $contact */
         foreach ($this->contactRepository->getAllContacts() as $contact) {
-            $aggregate[$contact->getIdentifier()] = (new GetSingleContactCloseTagActivities(
+            $aggregate[strval($contact->getIdentifier())] = (new GetSingleContactCloseTagActivities(
                 $this->contactRepository, $contact->getIdentifier()))->execute();
         }
+
         return $aggregate;
     }
 }
