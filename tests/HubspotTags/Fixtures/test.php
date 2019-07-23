@@ -55,4 +55,4 @@ fill_repos_with_data($contactRepo, $activityRepo);
 $useCase = new GetAllContactsCloseAndDemoAggregate($contactRepo);
 //TODO Sort
 $data = $useCase->execute();
-print_r($data);
+echo (new \HubspotTags\UseCase\ActivityActivityAggregateTable())->generateOutput($data);
