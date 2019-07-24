@@ -18,10 +18,16 @@ final class Contact
      */
     private $identifier;
 
-    public function __construct(ContactIdentifierInterface $identifier)
+    /**
+     * @var ContactIdentifierInterface|null
+     */
+    private $virtualId;
+
+    public function __construct(ContactIdentifierInterface $identifier, ?ContactIdentifierInterface $virtualId = null)
     {
         $this->identifier = $identifier;
         $this->activities = [];
+        $this->virtualId = $virtualId;
     }
 
     /**
@@ -50,5 +56,13 @@ final class Contact
     public function getIdentifier(): ContactIdentifierInterface
     {
         return $this->identifier;
+    }
+
+    /**
+     * @return ContactIdentifierInterface
+     */
+    public function getVritualId(): ?ContactIdentifierInterface
+    {
+        return $this->virtualId;
     }
 }

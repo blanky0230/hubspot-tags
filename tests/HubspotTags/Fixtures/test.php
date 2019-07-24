@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-require_once '../../../vendor/autoload.php';
+require_once '/app/vendor/autoload.php';
 
 //namespace HubspotTags\Test;
 
-use DateTimeImmutable;
+use HubspotTags\Domain\ValueObject\ContactMailIdentifier;
+use HubspotTags\Integration\HubspotIntegrationService;
 use HubspotTags\UseCase\GetAllContactsCloseAndDemoAggregate;
 use HubspotTags\Domain\Activity;
 use HubspotTags\Domain\ActivityRepositoryInterface;
@@ -50,9 +51,16 @@ function fill_repos_with_data(
     }
 }
 
-fill_repos_with_data($contactRepo, $activityRepo);
+//fill_repos_with_data($contactRepo, $activityRepo);
 
-$useCase = new GetAllContactsCloseAndDemoAggregate($contactRepo);
+//$useCase = new GetAllContactsCloseAndDemoAggregate($contactRepo);
 //TODO Sort
-$data = $useCase->execute();
-echo (new \HubspotTags\UseCase\ActivityAggregateTableOutput())->generateOutput($data);
+//$data = $useCase->execute();
+//echo (new \HubspotTags\UseCase\ActivityAggregateTableOutput())->generateOutput($data);
+
+$hubby = new HubspotIntegrationService('BIG_NONONONO');
+$oof = $hubby->getSingleContact(new ContactMailIdentifier('bh@hubspot.com'));
+$hubby->getContactActivities($oof->getIdentifier());
+echo
+    (new \HubspotTags\UseCase\ActivityAggregateTableOutput())
+        ->generateOutput((new GetAllContactsCloseAndDemoAggregate($hubby))->execute());
