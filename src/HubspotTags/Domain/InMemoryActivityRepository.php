@@ -25,6 +25,11 @@ final class InMemoryActivityRepository implements ActivityRepositoryInterface
         $this->activities = [];
     }
 
+    /**
+     * @param ContactIdentifierInterface $identifier
+     *
+     * @return array
+     */
     public function getContactActivities(ContactIdentifierInterface $identifier): array
     {
         $contact = $this->contactRepository->getSingleContact($identifier);
@@ -35,6 +40,11 @@ final class InMemoryActivityRepository implements ActivityRepositoryInterface
         return $contact->getActivities();
     }
 
+    /**
+     * @param ActivityIdentifierInterface $identifier
+     *
+     * @return Activity|null
+     */
     public function getActivity(ActivityIdentifierInterface $identifier): ?Activity
     {
         if (!array_key_exists(strval($identifier), $this->activities)) {
@@ -44,6 +54,12 @@ final class InMemoryActivityRepository implements ActivityRepositoryInterface
         return $this->activities[strval($identifier)];
     }
 
+    /**
+     * @param ContactIdentifierInterface $contactIdentifier
+     * @param Activity                   $activity
+     *
+     * @return ActivityRepositoryInterface
+     */
     public function addActivity(ContactIdentifierInterface $contactIdentifier, Activity $activity): ActivityRepositoryInterface
     {
         $contact = $this->contactRepository->getSingleContact($contactIdentifier);
@@ -55,6 +71,9 @@ final class InMemoryActivityRepository implements ActivityRepositoryInterface
         return $this;
     }
 
+    /**
+     * @return Activity[]
+     */
     public function getAllActivities(): array
     {
         return $this->activities;

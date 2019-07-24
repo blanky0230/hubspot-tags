@@ -6,7 +6,7 @@ namespace HubspotTags\UseCase;
 
 use HubspotTags\Domain\ActivityAggregate;
 
-final class ActivityAggregateJsonPretty implements ActivityAggregateOutputInterface
+final class ActivityAggregateJsonPrettyOutput implements ActivityAggregateOutputInterface
 {
     public function generateOutPut(ActivityAggregate $activityAggregate): string
     {

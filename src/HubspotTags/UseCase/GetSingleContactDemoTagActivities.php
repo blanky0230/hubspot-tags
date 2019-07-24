@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace HubspotTags\UseCase;
 
+use App\HubspotTags\UseCase\ArrayCreatingUseCaseInterface;
 use HubspotTags\Domain\Activity;
 use HubspotTags\Domain\Contact;
 use HubspotTags\Domain\ContactRepositoryInterface;
 use HubspotTags\Domain\ValueObject\ContactIdentifierInterface;
 use HubspotTags\Domain\ValueObject\DemoTag;
 
-class GetSingleContactDemoTagActivities implements UseCaseInterface
+final class GetSingleContactDemoTagActivities implements ArrayCreatingUseCaseInterface
 {
     /**
      * @var ContactRepositoryInterface
@@ -28,7 +29,7 @@ class GetSingleContactDemoTagActivities implements UseCaseInterface
         $this->targetContactId = $targetContact;
     }
 
-    public function execute()
+    public function execute(): array
     {
         /** @var Contact $contact */
         $contact = $this->contactRepository->getSingleContact($this->targetContactId);

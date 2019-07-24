@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HubspotTags\UseCase;
 
+use App\HubspotTags\UseCase\ActivityAggregateCreationUseCaseInterface;
 use HubspotTags\Domain\Activity;
 use HubspotTags\Domain\ActivityAggregate;
 use HubspotTags\Domain\ContactRepositoryInterface;
@@ -11,7 +12,7 @@ use HubspotTags\Domain\ValueObject\CloseTag;
 use HubspotTags\Domain\ValueObject\ContactIdentifierInterface;
 use HubspotTags\Domain\ValueObject\DemoTag;
 
-class GetSingleContactsCloseAndDemoAggregate implements UseCaseInterface
+final class GetSingleContactsCloseAndDemoAggregate implements ActivityAggregateCreationUseCaseInterface
 {
     /**
      * @var ContactRepositoryInterface
@@ -29,7 +30,7 @@ class GetSingleContactsCloseAndDemoAggregate implements UseCaseInterface
         $this->targetContact = $targetContact;
     }
 
-    public function execute()
+    public function execute(): ActivityAggregate
     {
         $all = array_merge(
             (new GetSingleContactCloseTagActivities($this->contactRepository, $this->targetContact))->execute(),

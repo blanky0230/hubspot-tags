@@ -24,11 +24,19 @@ final class Contact
         $this->activities = [];
     }
 
+    /**
+     * @return array
+     */
     public function getActivities(): array
     {
         return $this->activities;
     }
 
+    /**
+     * @param Activity $activity
+     *
+     * @return Contact
+     */
     public function addActivity(Activity $activity): Contact
     {
         $this->activities[] = $activity;
@@ -36,6 +44,9 @@ final class Contact
         return $this;
     }
 
+    /**
+     * @return ContactIdentifierInterface
+     */
     public function getIdentifier(): ContactIdentifierInterface
     {
         return $this->identifier;

@@ -18,11 +18,19 @@ final class InMemoryContactRepository implements ContactRepositoryInterface
         $this->contacts = [];
     }
 
+    /**
+     * @return Contact[]
+     */
     public function getAllContacts(): array
     {
         return $this->contacts;
     }
 
+    /**
+     * @param ContactIdentifierInterface $identifier
+     *
+     * @return Contact|null
+     */
     public function getSingleContact(ContactIdentifierInterface $identifier): ?Contact
     {
         if (array_key_exists(strval($identifier), $this->contacts)) {
@@ -32,6 +40,11 @@ final class InMemoryContactRepository implements ContactRepositoryInterface
         return null;
     }
 
+    /**
+     * @param Contact $contact
+     *
+     * @return ContactRepositoryInterface
+     */
     public function addContact(Contact $contact): ContactRepositoryInterface
     {
         if (!array_key_exists(strval($contact->getIdentifier()), $this->contacts)) {

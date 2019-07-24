@@ -32,16 +32,27 @@ final class Activity
         $this->time = $time;
     }
 
+    /**
+     * @return AbstractTag
+     */
     public function getTag(): AbstractTag
     {
         return $this->tag;
     }
 
+    /**
+     * @return ActivityIdentifierInterface
+     */
     public function getIdentifier(): ActivityIdentifierInterface
     {
         return $this->identifier;
     }
 
+    /**
+     * Creates a string in format of 'Y-m-d' of the instance's creation date.
+     *
+     * @return string
+     */
     public function getCreationDateString(): string
     {
         return $this->time->format('Y-m-d');

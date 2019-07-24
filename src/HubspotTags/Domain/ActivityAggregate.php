@@ -20,7 +20,7 @@ final class ActivityAggregate
      * @param string $dateString
      * @param bool   $refreshSort
      */
-    public function addNewDateKey(string $dateString, bool $refreshSort = true)
+    public function addNewDateKey(string $dateString, bool $refreshSort = true): self
     {
         if (!$this->dateHasTagsValues($dateString)) {
             $this->items[$dateString] = ['DEMO' => 0, 'CLOSE' => 0];
@@ -29,6 +29,8 @@ final class ActivityAggregate
         if ($refreshSort) {
             $this->refreshSorting();
         }
+
+        return $this;
     }
 
     /**
@@ -79,7 +81,7 @@ final class ActivityAggregate
     /**
      * @param ActivityAggregate $other
      */
-    public function extendWithAggregate(ActivityAggregate $other)
+    public function extendWithAggregate(ActivityAggregate $other): self
     {
         foreach ($other->getItems() as $date => &$values) {
             $this->addNewDateKey($date, false);
@@ -95,12 +97,14 @@ final class ActivityAggregate
             }
         }
         $this->refreshSorting();
+
+        return $this;
     }
 
     /**
      * Simple ksort to keep everything in order nicely.
      */
-    private function refreshSorting()
+    private function refreshSorting(): void
     {
         uksort($this->items, function ($a, $b) {
             return strtotime($a) - strtotime($b);

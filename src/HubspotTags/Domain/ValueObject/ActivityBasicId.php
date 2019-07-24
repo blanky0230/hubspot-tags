@@ -6,6 +6,9 @@ namespace HubspotTags\Domain\ValueObject;
 
 final class ActivityBasicId implements ActivityIdentifierInterface
 {
+    /**
+     * @var int
+     */
     private $id;
 
     public function __construct(int $id)
