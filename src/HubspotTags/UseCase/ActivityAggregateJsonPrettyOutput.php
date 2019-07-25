@@ -8,7 +8,7 @@ use HubspotTags\Domain\ActivityAggregate;
 
 final class ActivityAggregateJsonPrettyOutput implements ActivityAggregateOutputInterface
 {
-    public function generateOutPut(ActivityAggregate $activityAggregate): string
+    public function generateOutput(ActivityAggregate $activityAggregate): string
     {
         $data = json_encode($activityAggregate->getItems(), JSON_PRETTY_PRINT);
         if ($data) {

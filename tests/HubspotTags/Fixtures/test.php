@@ -51,16 +51,16 @@ function fill_repos_with_data(
     }
 }
 
-//fill_repos_with_data($contactRepo, $activityRepo);
+fill_repos_with_data($contactRepo, $activityRepo);
 
-//$useCase = new GetAllContactsCloseAndDemoAggregate($contactRepo);
+$useCase = new GetAllContactsCloseAndDemoAggregate($contactRepo);
 //TODO Sort
-//$data = $useCase->execute();
-//echo (new \HubspotTags\UseCase\ActivityAggregateTableOutput())->generateOutput($data);
+$data = $useCase->execute();
+echo (new \HubspotTags\UseCase\ActivityAggregateTableOutput())->generateOutput($data);
 
-$hubby = new HubspotIntegrationService('BIG_NONONONO');
-$oof = $hubby->getSingleContact(new ContactMailIdentifier('bh@hubspot.com'));
-$hubby->getContactActivities($oof->getIdentifier());
-echo
-    (new \HubspotTags\UseCase\ActivityAggregateTableOutput())
-        ->generateOutput((new GetAllContactsCloseAndDemoAggregate($hubby))->execute());
+$hubby = new HubspotIntegrationService('foo');
+//$oof = $hubby->getSingleContact(new ContactMailIdentifier('bh@hubspot.com'));
+////$hubby->getContactActivities($oof->getIdentifier());
+//echo
+//    (new \HubspotTags\UseCase\ActivityAggregateTableOutput())
+//        ->generateOutput((new GetAllContactsCloseAndDemoAggregate($hubby))->execute());

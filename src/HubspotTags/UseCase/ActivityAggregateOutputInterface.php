@@ -8,5 +8,5 @@ use HubspotTags\Domain\ActivityAggregate;
 
 interface ActivityAggregateOutputInterface
 {
-    public function generateOutPut(ActivityAggregate $activityAggregate): string;
+    public function generateOutput(ActivityAggregate $activityAggregate): string;
 }

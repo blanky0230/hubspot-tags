@@ -6,6 +6,8 @@ namespace HubspotTags\Integration;
 
 use DateTimeImmutable;
 use Exception;
+use GuzzleHttp\Exception\ClientException;
+use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
 use GuzzleHttp\Client;
 use HubspotTags\Domain\Activity;
@@ -231,8 +233,14 @@ final class HubspotIntegrationService implements ContactRepositoryInterface, Act
         if (200 === $response->getStatusCode() && !empty($data)) {
             foreach ($data['contacts'] as $contact) {
                 //Seriously though? THIS is a very "INTERESTING" API!
-                $email = $contact['identity-profiles'][0]['identities'][0]['value'];
-                $this->onContactActivityCacheMiss(new ContactMailIdentifier($email));
+                $identityProfiles = $contact['identity-profiles'];
+                foreach ($identityProfiles as $idP) {
+                    foreach ($idP['identities'] as $id) {
+                        if ('EMAIL' === $id['type']) {
+                            $this->onContactActivityCacheMiss(new ContactMailIdentifier($id['value']));
+                        }
+                    }
+                }
             }
         }
     }
@@ -251,10 +259,25 @@ final class HubspotIntegrationService implements ContactRepositoryInterface, Act
                 'showListMemberships' => false,
                 'formSubmissionMode' => false,
             ]);
-        $response = $this->httpClient->get($urlTemplate);
-        $data = json_decode($response->getBody()->getContents(), true);
-        if (200 === $response->getStatusCode() && !empty($data)) {
-            return new Contact($email, new ContactBasicId(intval($data['canonical-vid'])));
+        try {
+            $response = $this->httpClient->get($urlTemplate);
+            $data = json_decode($response->getBody()->getContents(), true);
+            if (200 === $response->getStatusCode() && !empty($data)) {
+                return new Contact($email, new ContactBasicId(intval($data['canonical-vid'])));
+            }
+        } catch (ClientException $httpException) {
+            $response = $httpException->getResponse();
+            /** @var ResponseInterface $response */
+            if ($response) {
+                if (404 === $response->getStatusCode()) {
+                    throw new RuntimeException("There is no Contact '{$email}' registered with your HubSpot!");
+                }
+                if (500 <= $response->getStatusCode()) {
+                    throw new RuntimeException("API ERROR: \n {$response->getBody()->getContents()}");
+                }
+            } else {
+                throw $httpException;
+            }
         }
 
         return null;
@@ -267,7 +290,6 @@ final class HubspotIntegrationService implements ContactRepositoryInterface, Act
      */
     public function retrieveContactEngagements(ContactIdentifierInterface $identifier): ?array
     {
-        $this->failOnNonMailContactId($identifier);
         $urlTemplate = "https://api.hubapi.com/engagements/v1/engagements/associated/contact/{$identifier}?".http_build_query(
             [
                 'hapikey' => $this->hubsSpotApiKey,
